@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 
 public class movement : MonoBehaviour
@@ -23,4 +20,4 @@ public class movement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 10.0f);
         }
     }
-}
+}       
