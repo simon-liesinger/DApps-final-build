@@ -14,7 +14,6 @@ public class movement : MonoBehaviour
     {
         // rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y-1);
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * 5.0f, rb.velocity.y);
-        Debug.Log(Physics2D.Raycast(transform.position, new Vector2(0.0f, -1.0f), 1.0f).distance);
         if (Input.GetAxis("Vertical") > 0 && Physics2D.Raycast(transform.position - new Vector3(0.0f, 0.5f, 0.0f), new Vector2(0.0f, -1.0f)).distance < 1.0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, 10.0f);
