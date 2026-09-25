@@ -3,16 +3,13 @@ using UnityEngine;
 public class movement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    // Start is called before the first frame update
+
     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
-        // rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y-1);
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * 5.0f, rb.velocity.y);
         if (Input.GetAxis("Vertical") > 0 && Physics2D.Raycast(transform.position - new Vector3(0.0f, 0.5f, 0.0f), new Vector2(0.0f, -1.0f)).distance < 1.0f)
         {

@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class weapon : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
+    public float speed = 20f;
+    public float faceDirection = -1;
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        if (horizontal != 0)
+        {
+            faceDirection = horizontal;
+        }
+
+        if (Input.GetButtonDown("Fire1")) // left ctrl and space to shoot
         {
             Shoot();
         }
@@ -18,7 +26,10 @@ public class Weapon : MonoBehaviour
     void Shoot()
     {
         GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        float playerDirection = (transform.rotation.eulerAngles.y == 180f) ? 1f : -1f;
-        bulletObj.transform.localScale = new Vector3(playerDirection, 1, 1);
+        
+        Rigidbody2D rb = bulletObj.GetComponent<Rigidbody2D>();
+        
+        rb.velocity = new Vector2(faceDirection * speed, 0f);
+
     }
 }
