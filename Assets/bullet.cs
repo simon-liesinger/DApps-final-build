@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-<<<<<<< HEAD
     public float speed;
+    private int sum;
 
-=======
-    int sum;
->>>>>>> 7c148f93a7284e78bf02cc9bf0faf07bd904600f
     // Start is called before the first frame update
     void Start()
     {
