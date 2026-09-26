@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class weapon : MonoBehaviour
+public class shooting : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
     public float speed = 20f;
-    public float faceDirection = -1;
+    public float faceDirection = -1; // shoots left by default
 
     void Update()
     {
@@ -30,6 +30,5 @@ public class weapon : MonoBehaviour
         Rigidbody2D rb = bulletObj.GetComponent<Rigidbody2D>();
         
         rb.velocity = new Vector2(faceDirection * speed, 0f);
-
     }
 }
