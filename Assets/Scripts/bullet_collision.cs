@@ -8,12 +8,12 @@ public class bullet_collision : MonoBehaviour
 {
     private void Start()
     {
-        Destroy(gameObject, 1f); // destroys bullet after 2 seconds
+        Destroy(gameObject, 1f); // destroys bullet after 1 second
     }
 
     void OnTriggerEnter2D(Collider2D other) // destroys bullet when colliding 
     {
-        if (other.CompareTag("Player")) return; 
+        if (other.CompareTag("Player")) return; // doesn't hit player
         Destroy(gameObject);
     }
 }
