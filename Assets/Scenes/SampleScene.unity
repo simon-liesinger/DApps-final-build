@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 731126364}
+  canJump: 1
 --- !u!212 &731126366
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8342,6 +8343,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1353414425231066007, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353414425231066007, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708649851480263383, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708649851480263383, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3340371031232688842, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3340371031232688842, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210968400637006299, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: variant
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5210968400637006299, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
       propertyPath: extraPieces
       value: 0
@@ -8444,7 +8473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5210968400637006299, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
       propertyPath: extraPositions.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5210968400637006299, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
       propertyPath: extraPostions.Array.data[0].x
@@ -8468,7 +8497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5975785089257222060, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6152726862217884644, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
       propertyPath: m_Name

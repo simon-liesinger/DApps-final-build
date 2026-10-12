@@ -28,7 +28,7 @@ public class piece_builder : MonoBehaviour
         {
             while (extraPieces+4 < parts.Count)
             {
-                DestroyImmediate(parts[parts.Count-1].gameObject);
+                Destroy(parts[parts.Count-1].gameObject);
                 parts.RemoveAt(parts.Count-1);
                 extraPositions.RemoveAt(extraPositions.Count-1);
             }
