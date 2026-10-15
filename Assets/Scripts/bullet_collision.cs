@@ -9,7 +9,6 @@ public class bullet_collision : MonoBehaviour
     private Vector3 mousePos;
     private Camera mainCam;
     private Rigidbody2D rb;
-    public float force;
     public float speed = 20f;
     public bool isHoming = false;
 

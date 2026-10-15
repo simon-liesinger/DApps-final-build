@@ -10,7 +10,7 @@ public class shooting : MonoBehaviour
     public float faceDirection = -1; // shoots left by default 
     public bool canFire = true;
     private float timer;
-    public float timeBetweenFiring;
+    public float timeBetweenFiring; // value set in inspector (0.5f)
     public bool homingActive = false;
 
     private Coroutine homingCoroutine;
@@ -20,7 +20,7 @@ public class shooting : MonoBehaviour
         if (homingCoroutine != null)
         {
             StopCoroutine(homingCoroutine);
-        }
+        }   
 
         homingCoroutine = StartCoroutine(HomingTimer(duration));
     }
