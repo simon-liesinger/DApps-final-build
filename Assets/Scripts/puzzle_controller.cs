@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 
 public class puzzle_controller : MonoBehaviour
 {
     private CompositeCollider2D outOfBounds;
-    private List<GameObject> pieces;
-    private List<Transform>[4] extraGoals;
+    private List<GameObject> pieces = new List<GameObject>();
+    private List<Transform>[] extraGoals = new List<Transform>[4];
     public bool currentlyCompleted;
     public bool currentlyOptCompleted;
     private int minCount;
@@ -16,26 +15,26 @@ public class puzzle_controller : MonoBehaviour
     void Start()
     {
         //find all the objects
-        outOfBounds = transform.FindAllComponentsOfType<BoxCollider2D>();
-        foreach (Transform child in transform.Find("parts"))
+        outOfBounds = transform.gameObject.GetComponent<CompositeCollider2D>();
+        foreach (Transform child in transform.Find("Pieces"))
         {
             pieces.Add(child.gameObject);
         }
-        foreach (Transform child in transform.Find("extraGoals").Find("High"))
+        foreach (Transform child in transform.Find("ExtraGoals").Find("High"))
         {
-            extraGoals[0].Add(child.gameObject);
+            extraGoals[0].Add(child);
         }
-        foreach (Transform child in transform.Find("extraGoals").Find("Low"))
+        foreach (Transform child in transform.Find("ExtraGoals").Find("Low"))
         {
-            extraGoals[1].Add(child.gameObject);
+            extraGoals[1].Add(child);
         }
-        foreach (Transform child in transform.Find("extraGoals").Find("OptHigh"))
+        foreach (Transform child in transform.Find("ExtraGoals").Find("OptHigh"))
         {
-            extraGoals[2].Add(child.gameObject);
+            extraGoals[2].Add(child);
         }
-        foreach (Transform child in transform.Find("extraGoals").Find("OptLow"))
+        foreach (Transform child in transform.Find("ExtraGoals").Find("OptLow"))
         {
-            extraGoals[3].Add(child.gameObject);
+            extraGoals[3].Add(child);
         }
     }
 
@@ -46,7 +45,7 @@ public class puzzle_controller : MonoBehaviour
         currentlyOptCompleted = true;
         foreach (GameObject piece in pieces)
         {
-            if (outOfBounds.IsTouching(piece.GetComponentOfType<CompositeCollider2D>()))
+            if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
             {
                 currentlyCompleted = false;
             }
@@ -71,5 +70,9 @@ public class puzzle_controller : MonoBehaviour
         {
             currentlyOptCompleted = false;
         }
+    }
+    (int, int) scanGoals(List<Transform> positions)
+    {
+        return (1, 1);
     }
 }
