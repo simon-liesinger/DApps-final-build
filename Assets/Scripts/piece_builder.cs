@@ -17,22 +17,19 @@ public class piece_builder : MonoBehaviour
         {
             extraPieces = 0; // can't have less than 0
         }
-        // if (extraPieces+4 > parts.Count)
-        // {
-        //     while (extraPieces+4 > parts.Count)
-        //     {
-        //         parts.Add(Instantiate(piecePrefab, transform).transform); // make some new ones to fill the count
-        //         extraPositions.Add(new Vector2Int(0,0));
-        //     }
-        // } else if (extraPieces+4 < parts.Count)
-        // {
-        //     while (extraPieces+4 < parts.Count)
-        //     {
-        //         Destroy(parts[parts.Count-1].gameObject);
-        //         parts.RemoveAt(parts.Count-1);
-        //         extraPositions.RemoveAt(extraPositions.Count-1);
-        //     }
-        // }
+        if (extraPieces > extraPositions.Count)
+        {
+            while (extraPieces > extraPositions.Count)
+            {
+                extraPositions.Add(new Vector2Int(0,0));
+            }
+        } else if (extraPieces < extraPositions.Count)
+        {
+            while (extraPieces < extraPositions.Count)
+            {
+                extraPositions.RemoveAt(extraPositions.Count-1);
+            }
+        }
         switch (variant)
         {
             case PieceType.T:
@@ -79,7 +76,11 @@ public class piece_builder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < extraPieces; i++)
+        {
+            parts.Add(Instantiate(piecePrefab, transform).transform);
+            parts[i+4].localPosition = (Vector2)extraPositions[i];
+        }
     }
 
     // Update is called once per frame
@@ -90,6 +91,10 @@ public class piece_builder : MonoBehaviour
 
     void DrawGizmos()
     {
-        
+        Gizmos.color = new Color(255, 255, 255);
+        for (int i = 0; i < extraPositions.Count; i++)
+        {
+            Gizmos.DrawCube(transform.TransformPoint((Vector2)extraPositions[i]), transform.localScale);
+        }
     }
 }
