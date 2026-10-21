@@ -89,7 +89,7 @@ public class piece_builder : MonoBehaviour
         
     }
 
-    void DrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.color = new Color(255, 255, 255);
         for (int i = 0; i < extraPositions.Count; i++)

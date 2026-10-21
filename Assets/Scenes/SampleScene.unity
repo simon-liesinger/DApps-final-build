@@ -8823,6 +8823,10 @@ PrefabInstance:
       propertyPath: extraPositions.Array.data[0].x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5210968400637006299, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
+      propertyPath: extraPositions.Array.data[1].x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5975785089257222060, guid: f67c0543c5acd4b63aaef78166e83466, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
