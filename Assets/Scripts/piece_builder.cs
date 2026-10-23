@@ -17,19 +17,16 @@ public class piece_builder : MonoBehaviour
         {
             extraPieces = 0; // can't have less than 0
         }
-        if (extraPieces+4 > parts.Count)
+        if (extraPieces > extraPositions.Count)
         {
-            while (extraPieces+4 > parts.Count)
+            while (extraPieces > extraPositions.Count)
             {
-                parts.Add(Instantiate(piecePrefab, transform).transform); // make some new ones to fill the count
                 extraPositions.Add(new Vector2Int(0,0));
             }
-        } else if (extraPieces+4 < parts.Count)
+        } else if (extraPieces < extraPositions.Count)
         {
-            while (extraPieces+4 < parts.Count)
+            while (extraPieces < extraPositions.Count)
             {
-                Destroy(parts[parts.Count-1].gameObject);
-                parts.RemoveAt(parts.Count-1);
                 extraPositions.RemoveAt(extraPositions.Count-1);
             }
         }
@@ -71,20 +68,33 @@ public class piece_builder : MonoBehaviour
                 parts[3].localPosition = new Vector3(-1,  1, 0);
                 break;
         }
-        for (int i = 0; i < extraPieces; i++)
-        {
-            parts[i+4].localPosition = (Vector2)extraPositions[i];
-        }
+        // for (int i = 0; i < extraPieces; i++)
+        // {
+        //     parts[i+4].localPosition = (Vector2)extraPositions[i];
+        // }
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < extraPieces; i++)
+        {
+            parts.Add(Instantiate(piecePrefab, transform).transform);
+            parts[i+4].localPosition = (Vector2)extraPositions[i];
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(255, 255, 255);
+        for (int i = 0; i < extraPositions.Count; i++)
+        {
+            Gizmos.DrawCube(transform.TransformPoint((Vector2)extraPositions[i]), transform.localScale);
+        }
     }
 }
