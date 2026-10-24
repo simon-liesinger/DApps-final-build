@@ -73,6 +73,22 @@ public class puzzle_controller : MonoBehaviour
     }
     (int, int) scanGoals(List<Transform> positions)
     {
-        return (1, 1);
+        // Scan the goals and return the minimum and maximum counts of nearby game objects on the boxes layer
+        int minCount = int.MaxValue;
+        int maxCount = int.MinValue;
+        foreach (Transform pos in positions)
+        {
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, new Vector2(1, 1), 0f, LayerMask.GetMask("Boxes"));
+            int count = colliders.Length;
+            if (count < minCount)
+            {
+                minCount = count;
+            }
+            if (count > maxCount)
+            {
+                maxCount = count;
+            }
+        }
+        return (minCount, maxCount);
     }
 }
