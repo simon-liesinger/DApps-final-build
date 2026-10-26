@@ -42,7 +42,7 @@ public class claw : MonoBehaviour
                 clawClosed = true;
                 // find something on the boxes layer within a 1x1 box around the claw
                 Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0, allowedLayers);
-                Debug.Log(colliders.Length);
+                // Debug.Log(colliders.Length);
                 if (colliders.Length > 0)
                 {
                     //find the closest collider to the claw

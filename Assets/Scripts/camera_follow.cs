@@ -29,7 +29,7 @@ public class camera_follow : MonoBehaviour
             transform.position = follow.position + offset;
         } else
         {
-            Debug.Log(0.01f*Time.deltaTime);
+            // Debug.Log(0.01f*Time.deltaTime);
             target = follow.position+(10*follow.position-10*lastPosition) + offset;
             transform.position = Vector3.Lerp(transform.position, target, 0.02f);
         }

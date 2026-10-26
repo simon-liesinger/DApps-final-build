@@ -43,13 +43,13 @@ public class puzzle_controller : MonoBehaviour
     {
         currentlyCompleted = true;
         currentlyOptCompleted = true;
-        foreach (GameObject piece in pieces)
-        {
-            if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
-            {
-                currentlyCompleted = false;
-            }
-        }
+        // foreach (GameObject piece in pieces)
+        // {
+        //     if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
+        //     {
+        //         currentlyCompleted = false;
+        //     }
+        // }
         (minCount, maxCount) = scanGoals(extraGoals[0]);
         if (minCount < 6)
         {
@@ -73,6 +73,7 @@ public class puzzle_controller : MonoBehaviour
     }
     (int, int) scanGoals(List<Transform> positions)
     {
+        return (1,1);
         // Scan the goals and return the minimum and maximum counts of nearby game objects on the boxes layer
         int minCount = int.MaxValue;
         int maxCount = int.MinValue;
