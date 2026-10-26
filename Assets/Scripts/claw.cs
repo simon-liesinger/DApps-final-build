@@ -88,7 +88,7 @@ public class claw : MonoBehaviour
             {
                 clawRotationOffset += 360;
             }
-            rb.angularVelocity = rotationSpeed * clawRotationOffset / Mathf.Abs(clawRotationOffset);
+            rb.angularVelocity = rotationSpeed * Mathf.Sign(clawRotationOffset);
             if (heldPiece != null)
             {
                 heldRigidBody.velocity = rb.velocity;

@@ -20,6 +20,10 @@ public class puzzle_controller : MonoBehaviour
         {
             pieces.Add(child.gameObject);
         }
+        extraGoals[0] = new List<Transform>();
+        extraGoals[1] = new List<Transform>();
+        extraGoals[2] = new List<Transform>();
+        extraGoals[3] = new List<Transform>();
         foreach (Transform child in transform.Find("ExtraGoals").Find("High"))
         {
             extraGoals[0].Add(child);
@@ -73,7 +77,6 @@ public class puzzle_controller : MonoBehaviour
     }
     (int, int) scanGoals(List<Transform> positions)
     {
-        return (1,1);
         // Scan the goals and return the minimum and maximum counts of nearby game objects on the boxes layer
         int minCount = int.MaxValue;
         int maxCount = int.MinValue;
