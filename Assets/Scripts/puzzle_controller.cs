@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class puzzle_controller : MonoBehaviour
@@ -11,6 +12,8 @@ public class puzzle_controller : MonoBehaviour
     public bool currentlyOptCompleted;
     private int minCount;
     private int maxCount;
+    private BoxCollider2D entrance;
+    private Collider2D[] hit;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,20 +43,40 @@ public class puzzle_controller : MonoBehaviour
         {
             extraGoals[3].Add(child);
         }
+
+        entrance = transform.Find("Entrance").GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Physics2D.OverlapCollider(entrance, new ContactFilter2D().NoFilter(), hit);
+        foreach (Collider2D collider in hit)
+        {
+            if (collider.GameObject().CompareTag("Player"))
+            {
+                enterPuzzle(collider.GameObject());
+            }
+        }
+        checkCompletion();
+    }
+
+    void enterPuzzle(GameObject player)
+    {
+        
+    }
+
+    void checkCompletion()
+    {
         currentlyCompleted = true;
         currentlyOptCompleted = true;
-        // foreach (GameObject piece in pieces)
-        // {
-        //     if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
-        //     {
-        //         currentlyCompleted = false;
-        //     }
-        // }
+        foreach (GameObject piece in pieces)
+        {
+            if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
+            {
+                currentlyCompleted = false;
+            }
+        }
         (minCount, maxCount) = scanGoals(extraGoals[0]);
         if (minCount < 6)
         {
