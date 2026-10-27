@@ -9,6 +9,7 @@ public class camera_follow : MonoBehaviour
     private Vector3 lastPosition;
     bool caught;
     private Vector3 target;
+    public float targetSize;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,5 +35,7 @@ public class camera_follow : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, target, 0.02f);
         }
         lastPosition = follow.position;
+
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetSize, Time.deltaTime);
     }
 }

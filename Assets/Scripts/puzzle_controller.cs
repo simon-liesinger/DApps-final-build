@@ -14,6 +14,10 @@ public class puzzle_controller : MonoBehaviour
     private int maxCount;
     private BoxCollider2D entrance;
     private Collider2D[] hit;
+    public movement player;
+    public camera_follow camera;
+    private Transform cameraTarget;
+    public float cameraSize;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,25 +49,37 @@ public class puzzle_controller : MonoBehaviour
         }
 
         entrance = transform.Find("Entrance").GetComponent<BoxCollider2D>();
+        cameraTarget = transform.Find("Camera Target");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Physics2D.OverlapCollider(entrance, new ContactFilter2D().NoFilter(), hit);
-        foreach (Collider2D collider in hit)
-        {
-            if (collider.GameObject().CompareTag("Player"))
-            {
-                enterPuzzle(collider.GameObject());
-            }
-        }
+        // hit = new Collider2D[0];
+        // Physics2D.OverlapCollider(entrance, new ContactFilter2D().NoFilter(), hit);
+        // foreach (Collider2D collider in hit)
+        // {
+        //     if (collider.GameObject().CompareTag("Player"))
+        //     {
+        //         enterPuzzle(collider.GameObject());
+        //     }
+        // }
         checkCompletion();
     }
 
-    void enterPuzzle(GameObject player)
+    private void OnCollisionEnter2D(Collision2D collider)
     {
-        
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            enterPuzzle();
+        }
+    }
+
+    void enterPuzzle()
+    {
+        player.active = false;
+        camera.follow = cameraTarget;
+        camera.targetSize = cameraSize;
     }
 
     void checkCompletion()
