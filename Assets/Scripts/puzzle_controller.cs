@@ -12,7 +12,7 @@ public class puzzle_controller : MonoBehaviour
     public bool currentlyOptCompleted;
     private int minCount;
     private int maxCount;
-    private BoxCollider2D entrance;
+    public BoxCollider2D entrance;
     private Collider2D[] hit;
     public movement player;
     public camera_follow camera;
