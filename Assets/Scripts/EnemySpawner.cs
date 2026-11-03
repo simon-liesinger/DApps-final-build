@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner object
 {
-    public GameObject[] enemyPrefabs;
-    public float minWait;
-    public float maxWait;
+    public GameObject[] enemyPrefabs;  
+    public float minWait; 
+    public float maxWait; // minWait and maxWait are changed in the inspector
     private bool isSpawning;
 
     private void Awake()
@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner 
 
     void SpawnObject()
     {
-        int spawnPointX = Random.Range(-10, 10);
+        int spawnPointX = Random.Range(-5, 5);
         int spawnPointY = Random.Range(10, 20);
         Vector2 spawnPosition = new Vector2(spawnPointX, spawnPointY);
 
