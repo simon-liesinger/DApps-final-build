@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class puzzle_controller : MonoBehaviour
@@ -11,6 +12,12 @@ public class puzzle_controller : MonoBehaviour
     public bool currentlyOptCompleted;
     private int minCount;
     private int maxCount;
+    public BoxCollider2D entrance;
+    private Collider2D[] hit;
+    public movement player;
+    public camera_follow camera;
+    private Transform cameraTarget;
+    public float cameraSize;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +27,10 @@ public class puzzle_controller : MonoBehaviour
         {
             pieces.Add(child.gameObject);
         }
+        extraGoals[0] = new List<Transform>();
+        extraGoals[1] = new List<Transform>();
+        extraGoals[2] = new List<Transform>();
+        extraGoals[3] = new List<Transform>();
         foreach (Transform child in transform.Find("ExtraGoals").Find("High"))
         {
             extraGoals[0].Add(child);
@@ -36,20 +47,52 @@ public class puzzle_controller : MonoBehaviour
         {
             extraGoals[3].Add(child);
         }
+
+        entrance = transform.Find("Entrance").GetComponent<BoxCollider2D>();
+        cameraTarget = transform.Find("Camera Target");
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentlyCompleted = true;
-        currentlyOptCompleted = true;
-        // foreach (GameObject piece in pieces)
+        // hit = new Collider2D[0];
+        // Physics2D.OverlapCollider(entrance, new ContactFilter2D().NoFilter(), hit);
+        // foreach (Collider2D collider in hit)
         // {
-        //     if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
+        //     if (collider.GameObject().CompareTag("Player"))
         //     {
-        //         currentlyCompleted = false;
+        //         enterPuzzle(collider.GameObject());
         //     }
         // }
+        checkCompletion();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            enterPuzzle();
+        }
+    }
+
+    void enterPuzzle()
+    {
+        player.active = false;
+        camera.follow = cameraTarget;
+        camera.targetSize = cameraSize;
+    }
+
+    void checkCompletion()
+    {
+        currentlyCompleted = true;
+        currentlyOptCompleted = true;
+        foreach (GameObject piece in pieces)
+        {
+            if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
+            {
+                currentlyCompleted = false;
+            }
+        }
         (minCount, maxCount) = scanGoals(extraGoals[0]);
         if (minCount < 6)
         {
@@ -73,7 +116,6 @@ public class puzzle_controller : MonoBehaviour
     }
     (int, int) scanGoals(List<Transform> positions)
     {
-        return (1,1);
         // Scan the goals and return the minimum and maximum counts of nearby game objects on the boxes layer
         int minCount = int.MaxValue;
         int maxCount = int.MinValue;

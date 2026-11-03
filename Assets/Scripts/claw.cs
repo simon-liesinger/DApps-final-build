@@ -20,6 +20,7 @@ public class claw : MonoBehaviour
     private Transform heldPart;
     private Rigidbody2D heldRigidBody;
     public LayerMask allowedLayers;
+    private Vector3 positionOffset;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,9 +59,11 @@ public class claw : MonoBehaviour
                         }
                     }
                     //grab the closest collider
-                    heldPart = closestCollider.transform;
-                    heldPiece = heldPart.parent;
+                    heldPiece = closestCollider.transform;
+                    //find the offset so an individual piece is held rather than the center
+                    positionOffset = Quaternion.Inverse(transform.rotation) * (heldPiece.position - transform.position);
                     heldRigidBody = heldPiece.GetComponent<Rigidbody2D>();
+                    // heldRigidBody.bodyType = RigidbodyType2D.Kinematic;
                     //find the relative rotation of the held piece to the claw
                     holdAngleOffset = targetRotation - heldPiece.rotation.eulerAngles.z;
                     //and round it to the nearest 90 degrees
@@ -71,6 +74,7 @@ public class claw : MonoBehaviour
                 clawClosed = false;
                 if (heldPiece != null)
                 {
+                    heldRigidBody.bodyType = RigidbodyType2D.Dynamic;
                     heldPart = null;
                     heldPiece = null;
                     heldRigidBody = null;
@@ -78,7 +82,8 @@ public class claw : MonoBehaviour
             }
 
             //apply the mouse tracking force to the claw and the held piece
-            rb.velocity = (targetPosition - transform.position).normalized * speed;
+            float speedFalloff = (targetPosition - transform.position).magnitude<2.0?(targetPosition - transform.position).magnitude/2:1;
+            rb.velocity = (targetPosition - transform.position).normalized * speed * speedFalloff;
             clawRotationOffset = targetRotation - transform.rotation.eulerAngles.z;
             if (clawRotationOffset > 180)
             {
@@ -88,17 +93,18 @@ public class claw : MonoBehaviour
             {
                 clawRotationOffset += 360;
             }
-            rb.angularVelocity = rotationSpeed * clawRotationOffset / Mathf.Abs(clawRotationOffset);
+            float rotFalloff = (Mathf.Abs(clawRotationOffset)<10)?clawRotationOffset/10:1;
+            rb.angularVelocity = rotationSpeed * Mathf.Sign(clawRotationOffset) * rotFalloff;
             if (heldPiece != null)
             {
                 heldRigidBody.velocity = rb.velocity;
                 heldRigidBody.angularVelocity = rb.angularVelocity;
 
                 //draw the piece towards the claw
-                Vector3 direction = (transform.position - heldPart.position).normalized;
+                Vector3 direction = (transform.position - heldPiece.position + transform.rotation * positionOffset).normalized;
                 heldRigidBody.AddForce(direction * holdSpeed);
                 //find the relative rotation of the held piece to the claw
-                pieceAngleOffset = targetRotation - heldPiece.rotation.eulerAngles.z - holdAngleOffset + 90 * ((Input.GetButton("Q")?1:0) - (Input.GetButton("E")?1:0));
+                pieceAngleOffset = targetRotation - heldPiece.rotation.eulerAngles.z - holdAngleOffset + 90 * ((Input.GetButton("1")?1:0) - (Input.GetButton("e")?1:0));
                 if (pieceAngleOffset > 180)
                 {
                     pieceAngleOffset -= 360;
