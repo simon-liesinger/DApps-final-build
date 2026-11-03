@@ -38,6 +38,8 @@ public class bullet_collision : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) // destroys bullet when colliding 
     {
         if (other.CompareTag("Player")) return; // doesn't hit player
+        if (other.CompareTag("Enemy")) return; // doesn't get destroyed when entering enemy detection area
+        if (other.CompareTag("EnemyHurtBox")) return; // did this because the enemy wouldn't get hit otherwise, but causes bullet to go through enemy (work on better solution)
         Destroy(gameObject);
     } 
 }
