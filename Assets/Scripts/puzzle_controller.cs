@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mono.CompilerServices.SymbolWriter;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ public class puzzle_controller : MonoBehaviour
     private CompositeCollider2D outOfBounds;
     private List<GameObject> pieces = new List<GameObject>();
     private List<Transform>[] extraGoals = new List<Transform>[2];
-    public bool currentlyCompleted;
-    public bool currentlyOptCompleted;
+    private bool currentlyCompleted;
+    // public bool currentlyOptCompleted;
     private int minCount;
     private int maxCount;
     public BoxCollider2D entrance;
@@ -18,6 +19,7 @@ public class puzzle_controller : MonoBehaviour
     public camera_follow camera;
     private Transform cameraTarget;
     public float cameraSize;
+    public bool completed;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,7 @@ public class puzzle_controller : MonoBehaviour
         //     }
         // }
         checkCompletion();
+        resolveCompletion();
     }
 
     private void OnCollisionEnter2D(Collision2D collider)
@@ -85,7 +88,7 @@ public class puzzle_controller : MonoBehaviour
     void checkCompletion()
     {
         currentlyCompleted = true;
-        currentlyOptCompleted = true;
+        // currentlyOptCompleted = true;
         foreach (GameObject piece in pieces)
         {
             if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
@@ -113,6 +116,20 @@ public class puzzle_controller : MonoBehaviour
         // {
         //     currentlyOptCompleted = false;
         // }
+    }
+    void resolveCompletion()
+    {
+        if (currentlyCompleted && !completed)
+        {
+            completed = true;
+            exitPuzzle();
+        }
+    }
+    void exitPuzzle()
+    {
+        player.active = true;
+        camera.follow = player.gameObject.transform;
+        camera.targetSize = cameraSize;
     }
     (int, int) scanGoals(List<Transform> positions)
     {
