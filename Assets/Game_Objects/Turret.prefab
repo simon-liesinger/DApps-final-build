@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7273467730096990423}
+  - component: {fileID: 8138119068764747026}
   m_Layer: 0
   m_Name: FirePointEnemy
   m_TagString: Untagged
@@ -31,6 +32,22 @@ Transform:
   m_Father: {fileID: 9104551630585489718}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &8138119068764747026
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300248148962025020}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!1 &9104551630585489715
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,10 +152,13 @@ MonoBehaviour:
   aimAngle: 0
   firePoint: {fileID: 7273467730096990423}
   enemyBulletPrefab: {fileID: 8755368365094786332, guid: 0da19e7d6997af94ebe77a18acb7bc59, type: 3}
-  speed: 12
+  speed: 8
   shotCooldownTime: 3
   shotTimer: 0
   canFire: 0
+  hitsTaken: 0
+  hitsCanTake: 4
+  hurtBox: {fileID: 8138119068764747026}
 --- !u!70 &9104551630585489716
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

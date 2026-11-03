@@ -23,7 +23,8 @@ public class EnemyBulletCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy")) return; // doesn't hit enemies
+        if (other.CompareTag("Enemy")) return; // doesn't hit enemies' detection areas
+        if (other.CompareTag("EnemyHurtBox")) return; // doesn't hit enemies; hurt boxes
         Destroy(gameObject);
     }
 }
