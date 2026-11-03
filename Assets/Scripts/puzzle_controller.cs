@@ -7,7 +7,7 @@ public class puzzle_controller : MonoBehaviour
 {
     private CompositeCollider2D outOfBounds;
     private List<GameObject> pieces = new List<GameObject>();
-    private List<Transform>[] extraGoals = new List<Transform>[4];
+    private List<Transform>[] extraGoals = new List<Transform>[2];
     public bool currentlyCompleted;
     public bool currentlyOptCompleted;
     private int minCount;
@@ -29,8 +29,8 @@ public class puzzle_controller : MonoBehaviour
         }
         extraGoals[0] = new List<Transform>();
         extraGoals[1] = new List<Transform>();
-        extraGoals[2] = new List<Transform>();
-        extraGoals[3] = new List<Transform>();
+        // extraGoals[2] = new List<Transform>();
+        // extraGoals[3] = new List<Transform>();
         foreach (Transform child in transform.Find("ExtraGoals").Find("High"))
         {
             extraGoals[0].Add(child);
@@ -39,14 +39,14 @@ public class puzzle_controller : MonoBehaviour
         {
             extraGoals[1].Add(child);
         }
-        foreach (Transform child in transform.Find("ExtraGoals").Find("OptHigh"))
-        {
-            extraGoals[2].Add(child);
-        }
-        foreach (Transform child in transform.Find("ExtraGoals").Find("OptLow"))
-        {
-            extraGoals[3].Add(child);
-        }
+        // foreach (Transform child in transform.Find("ExtraGoals").Find("OptHigh"))
+        // {
+        //     extraGoals[2].Add(child);
+        // }
+        // foreach (Transform child in transform.Find("ExtraGoals").Find("OptLow"))
+        // {
+        //     extraGoals[3].Add(child);
+        // }
 
         entrance = transform.Find("Entrance").GetComponent<BoxCollider2D>();
         cameraTarget = transform.Find("Camera Target");
@@ -103,16 +103,16 @@ public class puzzle_controller : MonoBehaviour
         {
             currentlyCompleted = false;
         }
-        (minCount, maxCount) = scanGoals(extraGoals[2]);
-        if (minCount < 6)
-        {
-            currentlyOptCompleted = false;
-        }
-        (minCount, maxCount) = scanGoals(extraGoals[3]);
-        if (minCount > 2)
-        {
-            currentlyOptCompleted = false;
-        }
+        // (minCount, maxCount) = scanGoals(extraGoals[2]);
+        // if (minCount < 6)
+        // {
+        //     currentlyOptCompleted = false;
+        // }
+        // (minCount, maxCount) = scanGoals(extraGoals[3]);
+        // if (minCount > 2)
+        // {
+        //     currentlyOptCompleted = false;
+        // }
     }
     (int, int) scanGoals(List<Transform> positions)
     {
