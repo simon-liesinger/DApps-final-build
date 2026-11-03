@@ -1,16 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class puzzle_controller : MonoBehaviour
 {
     private CompositeCollider2D outOfBounds;
     private List<GameObject> pieces = new List<GameObject>();
-    private List<Transform>[] extraGoals = new List<Transform>[4];
+    private List<Transform>[] extraGoals = new List<Transform>[2];
     public bool currentlyCompleted;
     public bool currentlyOptCompleted;
     private int minCount;
     private int maxCount;
+    public BoxCollider2D entrance;
+    private Collider2D[] hit;
+    public movement player;
+    public camera_follow camera;
+    private Transform cameraTarget;
+    public float cameraSize;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +29,8 @@ public class puzzle_controller : MonoBehaviour
         }
         extraGoals[0] = new List<Transform>();
         extraGoals[1] = new List<Transform>();
-        extraGoals[2] = new List<Transform>();
-        extraGoals[3] = new List<Transform>();
+        // extraGoals[2] = new List<Transform>();
+        // extraGoals[3] = new List<Transform>();
         foreach (Transform child in transform.Find("ExtraGoals").Find("High"))
         {
             extraGoals[0].Add(child);
@@ -32,28 +39,60 @@ public class puzzle_controller : MonoBehaviour
         {
             extraGoals[1].Add(child);
         }
-        foreach (Transform child in transform.Find("ExtraGoals").Find("OptHigh"))
-        {
-            extraGoals[2].Add(child);
-        }
-        foreach (Transform child in transform.Find("ExtraGoals").Find("OptLow"))
-        {
-            extraGoals[3].Add(child);
-        }
+        // foreach (Transform child in transform.Find("ExtraGoals").Find("OptHigh"))
+        // {
+        //     extraGoals[2].Add(child);
+        // }
+        // foreach (Transform child in transform.Find("ExtraGoals").Find("OptLow"))
+        // {
+        //     extraGoals[3].Add(child);
+        // }
+
+        entrance = transform.Find("Entrance").GetComponent<BoxCollider2D>();
+        cameraTarget = transform.Find("Camera Target");
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentlyCompleted = true;
-        currentlyOptCompleted = true;
-        // foreach (GameObject piece in pieces)
+        // hit = new Collider2D[0];
+        // Physics2D.OverlapCollider(entrance, new ContactFilter2D().NoFilter(), hit);
+        // foreach (Collider2D collider in hit)
         // {
-        //     if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
+        //     if (collider.GameObject().CompareTag("Player"))
         //     {
-        //         currentlyCompleted = false;
+        //         enterPuzzle(collider.GameObject());
         //     }
         // }
+        checkCompletion();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            enterPuzzle();
+        }
+    }
+
+    void enterPuzzle()
+    {
+        player.active = false;
+        camera.follow = cameraTarget;
+        camera.targetSize = cameraSize;
+    }
+
+    void checkCompletion()
+    {
+        currentlyCompleted = true;
+        currentlyOptCompleted = true;
+        foreach (GameObject piece in pieces)
+        {
+            if (outOfBounds.IsTouching(piece.GetComponent<CompositeCollider2D>()))
+            {
+                currentlyCompleted = false;
+            }
+        }
         (minCount, maxCount) = scanGoals(extraGoals[0]);
         if (minCount < 6)
         {
@@ -64,16 +103,16 @@ public class puzzle_controller : MonoBehaviour
         {
             currentlyCompleted = false;
         }
-        (minCount, maxCount) = scanGoals(extraGoals[2]);
-        if (minCount < 6)
-        {
-            currentlyOptCompleted = false;
-        }
-        (minCount, maxCount) = scanGoals(extraGoals[3]);
-        if (minCount > 2)
-        {
-            currentlyOptCompleted = false;
-        }
+        // (minCount, maxCount) = scanGoals(extraGoals[2]);
+        // if (minCount < 6)
+        // {
+        //     currentlyOptCompleted = false;
+        // }
+        // (minCount, maxCount) = scanGoals(extraGoals[3]);
+        // if (minCount > 2)
+        // {
+        //     currentlyOptCompleted = false;
+        // }
     }
     (int, int) scanGoals(List<Transform> positions)
     {
