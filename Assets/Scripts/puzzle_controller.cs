@@ -72,7 +72,7 @@ public class puzzle_controller : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collider)
     {
-        if (collider.gameObject.CompareTag("Player"))
+        if (collider.gameObject.CompareTag("Player") && !completed)
         {
             enterPuzzle();
         }
@@ -102,7 +102,7 @@ public class puzzle_controller : MonoBehaviour
             currentlyCompleted = false;
         }
         (minCount, maxCount) = scanGoals(extraGoals[1]);
-        if (minCount > 2)
+        if (minCount > 2 && minCount < int.MaxValue)
         {
             currentlyCompleted = false;
         }
@@ -116,6 +116,10 @@ public class puzzle_controller : MonoBehaviour
         // {
         //     currentlyOptCompleted = false;
         // }
+        if (currentlyCompleted)
+        {
+            Debug.Log("hey");
+        }
     }
     void resolveCompletion()
     {
@@ -129,7 +133,7 @@ public class puzzle_controller : MonoBehaviour
     {
         player.active = true;
         camera.follow = player.gameObject.transform;
-        camera.targetSize = cameraSize;
+        camera.targetSize = 5;
     }
     (int, int) scanGoals(List<Transform> positions)
     {

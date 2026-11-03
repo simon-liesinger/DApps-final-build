@@ -1530,6 +1530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 731126364}
   canJump: 1
+  timesHit: 0
   active: 1
 --- !u!212 &731126366
 SpriteRenderer:
@@ -10928,12 +10929,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de02828cde814cf2ba080b68578c36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentlyCompleted: 0
-  currentlyOptCompleted: 0
   entrance: {fileID: 1963769606}
   player: {fileID: 731126365}
   camera: {fileID: 519420033}
   cameraSize: 12
+  completed: 0
 --- !u!66 &1782159949
 CompositeCollider2D:
   m_ObjectHideFlags: 0
