@@ -11082,6 +11082,9 @@ MonoBehaviour:
   camera: {fileID: 519420033}
   cameraSize: 12
   completed: 0
+  tiles: {fileID: 975924719}
+  clearLocationStart: {x: 199, y: -27}
+  clearLocationEnd: {x: 202, y: -33}
 --- !u!66 &1782159949
 CompositeCollider2D:
   m_ObjectHideFlags: 0
