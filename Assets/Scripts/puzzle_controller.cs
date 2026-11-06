@@ -116,10 +116,6 @@ public class puzzle_controller : MonoBehaviour
         // {
         //     currentlyOptCompleted = false;
         // }
-        if (currentlyCompleted)
-        {
-            Debug.Log("hey");
-        }
     }
     void resolveCompletion()
     {
