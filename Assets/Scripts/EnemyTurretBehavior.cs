@@ -37,12 +37,15 @@ public partial class EnemyTurretBehavior : MonoBehaviour
         {
             if (collision.IsTouching(hurtBox))
             {
+                bullet_collision bullet = GetComponent<bullet_collision>();
                 hitsTaken++;
+                
                 if (hitsTaken >= hitsCanTake)
                 {
                     
                     Destroy(gameObject);
                 }
+                bullet.DestroyBullet();
             }
         }
     }

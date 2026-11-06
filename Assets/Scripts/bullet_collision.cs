@@ -41,5 +41,10 @@ public class bullet_collision : MonoBehaviour
         if (other.CompareTag("Enemy")) return; // doesn't get destroyed when entering enemy detection area
         if (other.CompareTag("EnemyHurtBox")) return; // did this because the enemy wouldn't get hit otherwise, but causes bullet to go through enemy (work on better solution)
         Destroy(gameObject);
-    } 
+    }
+
+    public void DestroyBullet()
+    {
+        DestroyBullet();
+    }
 }
