@@ -37,13 +37,23 @@ public partial class EnemyTurretBehavior : MonoBehaviour
         {
             if (collision.IsTouching(hurtBox))
             {
+                bullet_collision bullet = GetComponent<bullet_collision>();
                 hitsTaken++;
+                
                 if (hitsTaken >= hitsCanTake)
                 {
+                    
                     Destroy(gameObject);
                 }
+                bullet.DestroyBullet();
             }
         }
+    }
+
+    private void OnDestroy() // this function can be used when other enemy types are destroyed
+    {
+        movement playerObj = GameObject.FindGameObjectWithTag("Player").GetComponent<movement>();
+        playerObj.IncreaseESlain();
     }
 
     public void OnTriggerStay2D(Collider2D collision)
