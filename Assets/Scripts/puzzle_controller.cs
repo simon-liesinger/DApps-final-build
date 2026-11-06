@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Mono.CompilerServices.SymbolWriter;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class puzzle_controller : MonoBehaviour
 {
@@ -20,6 +19,9 @@ public class puzzle_controller : MonoBehaviour
     private Transform cameraTarget;
     public float cameraSize;
     public bool completed;
+    public Tilemap tiles;
+    public Vector2Int clearLocationStart;
+    public Vector2Int clearLocationEnd;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,15 @@ public class puzzle_controller : MonoBehaviour
 
         entrance = transform.Find("Entrance").GetComponent<BoxCollider2D>();
         cameraTarget = transform.Find("Camera Target");
+
+        if (clearLocationStart.x > clearLocationEnd.x)
+        {
+            (clearLocationStart.x, clearLocationEnd.x) = (clearLocationEnd.x, clearLocationStart.x);
+        }
+        if (clearLocationStart.y > clearLocationEnd.y)
+        {
+            (clearLocationStart.y, clearLocationEnd.y) = (clearLocationEnd.y, clearLocationStart.y);
+        }
     }
 
     // Update is called once per frame
@@ -123,6 +134,7 @@ public class puzzle_controller : MonoBehaviour
         {
             completed = true;
             exitPuzzle();
+            clearCells();
         }
     }
     void exitPuzzle()
@@ -130,6 +142,16 @@ public class puzzle_controller : MonoBehaviour
         player.active = true;
         camera.follow = player.gameObject.transform;
         camera.targetSize = 5;
+    }
+    void clearCells()
+    {
+        for (int x = clearLocationStart.x; x < clearLocationEnd.x; x++)
+        {
+            for (int y = clearLocationStart.y; y < clearLocationEnd.y; y++)
+            {
+                tiles.SetTile(new Vector3Int(x, y, 0), null);
+            }
+        }
     }
     (int, int) scanGoals(List<Transform> positions)
     {
@@ -150,5 +172,17 @@ public class puzzle_controller : MonoBehaviour
             }
         }
         return (minCount, maxCount);
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1f, 0f, 0f, 1f);
+        Gizmos.DrawCube(
+            (Vector2)(clearLocationStart+clearLocationEnd)/2,
+            new Vector3(
+                Mathf.Abs(clearLocationEnd.x-clearLocationStart.x),
+                Mathf.Abs(clearLocationEnd.y-clearLocationStart.y),
+                1
+            )
+        );
     }
 }
