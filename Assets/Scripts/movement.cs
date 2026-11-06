@@ -6,6 +6,7 @@ public class movement : MonoBehaviour
     public bool canJump = true;
     public int timesHit = 0;
     public bool active = true;
+    public int enemiesSlain = 0;
 
     void Start()
     {
@@ -28,6 +29,11 @@ public class movement : MonoBehaviour
             }
             
         }
+    }
+
+    public void IncreaseESlain()
+    {
+        enemiesSlain++;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

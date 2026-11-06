@@ -10841,7 +10841,7 @@ GameObject:
   - component: {fileID: 1655586888}
   - component: {fileID: 1655586887}
   m_Layer: 0
-  m_Name: Text (Legacy)
+  m_Name: Hits Taken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

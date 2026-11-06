@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     public movement playerStats;
-    public int hitCounter;
-    public Text testText;
+    public Text hitCounter;
+    public Text enemiesDestroyedCounter;
     public Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<movement>();
-        testText.text = "FEGfhfewhfohew";
 
         
     }
@@ -21,9 +20,8 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hitCounter = playerStats.timesHit;
-        testText.text = $"Hits taken: {hitCounter}";
-
+        hitCounter.text = $"Hits taken: {playerStats.timesHit}";
+        enemiesDestroyedCounter.text = $"Enemies destroyed: {playerStats.enemiesSlain}";
 
     }
 }
