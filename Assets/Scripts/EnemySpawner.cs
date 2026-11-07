@@ -66,7 +66,7 @@ public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner 
         }
     }
 
-    private void SpawnObject()
+    void SpawnObject()
     {
         if (validSpawnPositions.Count == 0) return;
 

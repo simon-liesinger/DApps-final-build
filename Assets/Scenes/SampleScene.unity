@@ -10461,10 +10461,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb1862fe8769b504ba4757e362cb2864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabs:
+  tilemap: {fileID: 975924719}
+  objectPrefabs:
   - {fileID: 3639171466457341410, guid: 209c15ec783c64943a4605932462dcd3, type: 3}
   - {fileID: 6136766734410932205, guid: acd1834551b48364280c359b0b0cecdb, type: 3}
   - {fileID: 671227962150470620, guid: cd03f8ee8e37d0c4dbf62f8642657e7c, type: 3}
+  enemy1Probability: 0.2
+  enemy3Probability: 0.1
+  maxObjects: 10
   minWait: 1
   maxWait: 5
 --- !u!1001 &1624855768
