@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,26 +10,89 @@ public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner 
 
     public Tilemap tilemap;
     public GameObject[] objectPrefabs;  // 0 = Enemy1, 1 = Enemy2, 2 = Enemy3
+    public float enemy1Probability = 0.2f;
+    public float enemy3Probability = 0.1f;
     public int maxObjects = 10;
-    public float minWait; 
-    public float maxWait; // minWait and maxWait are changed in the inspector
-    private bool isSpawning;
-
+    public float minWait = 2f;
+    public float maxWait = 5f;
     private List<Vector3> validSpawnPositions = new List<Vector3>();
     private List<GameObject> spawnObjects = new List<GameObject>();
-    
-    private void Awake()
+
+    void Start()
     {
-        isSpawning = false;
+        GatherValidPositions();
+        StartCoroutine(SpawnObjectsIfNeeded());
     }
 
-    void Update()
+    private int ActiveObjectCount()
     {
-        if (!isSpawning)
-        {            
-            float timer = Random.Range(minWait, maxWait);
-            Invoke("SpawnObject", timer);
-            isSpawning = true;
+        spawnObjects.RemoveAll(item => item == null);
+        return spawnObjects.Count;
+    }
+
+    private IEnumerator SpawnObjectsIfNeeded()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(minWait, maxWait));
+
+            if (ActiveObjectCount() < maxObjects)
+            {
+                SpawnObject();
+            }            
+        }
+    }
+
+    private bool PositionHasObject(Vector3 positionToCheck)
+    {
+        return spawnObjects.Any(checkObj => checkObj && Vector3.Distance(checkObj.transform.position, positionToCheck) < 1.0f);
+    }
+
+    private ObjectType RandomObjectType()
+    {
+        float randomChoice = Random.value;
+
+        if (randomChoice <= enemy3Probability)
+        {
+            return ObjectType.Enemy3;
+        }
+        else if (randomChoice <= (enemy3Probability + enemy1Probability))
+        {
+            return ObjectType.Enemy1;
+        }
+        else
+        {
+            return ObjectType.Enemy2;
+        }
+    }
+
+    private void SpawnObject()
+    {
+        if (validSpawnPositions.Count == 0) return;
+
+        Vector3 spawnPosition = Vector3.zero;
+        bool validPositionFound = false;
+        int attempts = 0;
+
+        while (!validPositionFound && attempts < 20)
+        {
+            attempts++;
+            Vector3 potentialPosition = validSpawnPositions[Random.Range(0, validSpawnPositions.Count)];
+            Vector3 leftPosition = potentialPosition + Vector3.left;
+            Vector3 rightPosition = potentialPosition + Vector3.right;
+
+            if (!PositionHasObject(leftPosition) && !PositionHasObject(rightPosition))
+            {
+                spawnPosition = potentialPosition;
+                validPositionFound = true;
+            }
+        }
+
+        if (validPositionFound)
+        {
+            ObjectType objectType = RandomObjectType();
+            GameObject gameObject = Instantiate(objectPrefabs[(int)objectType], spawnPosition, Quaternion.identity);
+            spawnObjects.Add(gameObject);
         }
     }
 
@@ -36,17 +100,19 @@ public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner 
     {
         BoundsInt boundsInt = tilemap.cellBounds;
         TileBase[] allTiles = tilemap.GetTilesBlock(boundsInt);
-    }
+        Vector3 start = tilemap.CellToWorld(new Vector3Int(boundsInt.xMin, boundsInt.yMin, 0));
 
-    void SpawnObject()
-    {
-        int spawnPointX = Random.Range(-5, 5);
-        int spawnPointY = Random.Range(10, 20);
-        Vector2 spawnPosition = new Vector2(spawnPointX, spawnPointY);
-
-        int randEnemy = Random.Range(0, objectPrefabs.Length);
-
-        Instantiate(objectPrefabs[randEnemy], spawnPosition, Quaternion.identity);
-        isSpawning = false;
+        for (int x = 0; x < boundsInt.size.x; x++)
+        {
+            for (int y = 0; y < boundsInt.size.y; y++)
+            {
+                TileBase tile = allTiles[x + y * boundsInt.size.x];
+                if (tile != null)
+                {
+                    Vector3 place = start + new Vector3(x + 0.5f, y + 1f, 0);
+                    validSpawnPositions.Add(place);
+                }
+            }
+        }
     }
 }
