@@ -8,7 +8,9 @@ public class UI : MonoBehaviour
     public movement playerStats;
     public Text hitCounter;
     public Text enemiesDestroyedCounter;
+    public Text timePassed;
     public Canvas canvas;
+    public float timer = 0f;
     // Start is called before the first frame update
     private void Start()
     {
@@ -22,8 +24,10 @@ public class UI : MonoBehaviour
     {
         hitCounter.text = $"Hits taken: {playerStats.timesHit}";
         enemiesDestroyedCounter.text = $"Enemies destroyed: {playerStats.enemiesSlain}";
+        timer += 1f * Time.deltaTime;
+        timePassed.text = $" {(Mathf.Floor(timer*10))/10}";
         
-
+        
     }
 
 }
