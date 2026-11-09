@@ -29,16 +29,9 @@ public class EnemyBulletCollision : MonoBehaviour
     {
         if (other.CompareTag("Enemy")) return; // doesn't hit enemies' detection areas
         if (other.CompareTag("EnemyHurtBox")) return; // doesn't hit enemies; hurt boxes
-        FadeOutDestoyBullet();
+        Destroy(gameObject);
         
     }
 
-    private void FadeOutDestoyBullet()
-    {
-        EnemyBulletCollision bullet = gameObject.GetComponent<EnemyBulletCollision>();
-        //bullet.scolor.a -= 1;
 
-        //Colour.color.a;
-
-    }
 }
