@@ -26,5 +26,4 @@ public class UI : MonoBehaviour
 
     }
 
-    void On
 }
