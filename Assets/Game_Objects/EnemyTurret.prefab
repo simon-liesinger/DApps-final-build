@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8138119068764747026}
   m_Layer: 0
   m_Name: FirePointEnemy
-  m_TagString: Untagged
+  m_TagString: EnemyHurtBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,14 +145,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9104551630585489715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 511b80798ba8f08439c87e41a60c7569, type: 3}
+  m_Script: {fileID: 11500000, guid: c035068431b97284fbb405d1e221ca8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 9104551630585489717}
   aimAngle: 0
   firePoint: {fileID: 7273467730096990423}
   enemyBulletPrefab: {fileID: 8755368365094786332, guid: 0da19e7d6997af94ebe77a18acb7bc59, type: 3}
-  speed: 8
+  speed: 12
   shotCooldownTime: 3
   shotTimer: 0
   canFire: 0

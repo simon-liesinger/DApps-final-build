@@ -10,7 +10,7 @@ public class UI : MonoBehaviour
     public Text enemiesDestroyedCounter;
     public Canvas canvas;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<movement>();
 
@@ -18,10 +18,13 @@ public class UI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         hitCounter.text = $"Hits taken: {playerStats.timesHit}";
         enemiesDestroyedCounter.text = $"Enemies destroyed: {playerStats.enemiesSlain}";
+        
 
     }
+
+    void On
 }
