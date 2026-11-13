@@ -12,7 +12,7 @@ public partial class EnemyTurretBehavior : MonoBehaviour
     public Transform firePoint;
     public GameObject enemyBulletPrefab;
     public float speed = 12f;
-    public float shotCooldownTime = 3f;
+    private float shotCooldownTime = 3f;
     public float shotTimer = 0f;
     public bool canFire = false;
     public int hitsTaken = 0;

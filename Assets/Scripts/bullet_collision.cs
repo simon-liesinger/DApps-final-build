@@ -12,6 +12,7 @@ public class bullet_collision : MonoBehaviour
     public float speed = 20f;
     public bool isHoming = false;
 
+
     private void Start()
     {
         Destroy(gameObject, 1f); // destroys bullet after 1 second
