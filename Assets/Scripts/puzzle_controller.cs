@@ -18,6 +18,7 @@ public class puzzle_controller : MonoBehaviour
     public camera_follow camera;
     private Transform cameraTarget;
     public float cameraSize;
+    public LayerMask piecesLayer;
     public bool completed;
     public Tilemap tiles;
     public Vector2Int clearLocationStart;
@@ -160,7 +161,7 @@ public class puzzle_controller : MonoBehaviour
         int maxCount = int.MinValue;
         foreach (Transform pos in positions)
         {
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, new Vector2(1, 1), 0f, LayerMask.GetMask("Boxes"));
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, new Vector2(1, 1), 0f, piecesLayer);
             int count = colliders.Length;
             if (count < minCount)
             {

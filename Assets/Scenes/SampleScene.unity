@@ -11086,6 +11086,9 @@ MonoBehaviour:
   player: {fileID: 731126365}
   camera: {fileID: 519420033}
   cameraSize: 12
+  piecesLayer:
+    serializedVersion: 2
+    m_Bits: 8
   completed: 0
   tiles: {fileID: 975924719}
   clearLocationStart: {x: 199, y: -27}
