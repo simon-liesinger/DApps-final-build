@@ -82,8 +82,9 @@ public class claw : MonoBehaviour
             }
 
             //apply the mouse tracking force to the claw and the held piece
-            float speedFalloff = (targetPosition - transform.position).magnitude<2.0?(targetPosition - transform.position).magnitude/2:1;
+            float speedFalloff = (targetPosition - transform.position).magnitude<2.0 ? (targetPosition - transform.position).magnitude/2 : 1;
             rb.velocity = (targetPosition - transform.position).normalized * speed * speedFalloff;
+
             clawRotationOffset = targetRotation - transform.rotation.eulerAngles.z;
             if (clawRotationOffset > 180)
             {
@@ -93,8 +94,9 @@ public class claw : MonoBehaviour
             {
                 clawRotationOffset += 360;
             }
-            float rotFalloff = (Mathf.Abs(clawRotationOffset)<10)?clawRotationOffset/10:1;
+            float rotFalloff = (Mathf.Abs(clawRotationOffset)<10) ? clawRotationOffset/10 : 1;
             rb.angularVelocity = rotationSpeed * Mathf.Sign(clawRotationOffset) * rotFalloff;
+            
             if (heldPiece != null)
             {
                 heldRigidBody.velocity = rb.velocity;
