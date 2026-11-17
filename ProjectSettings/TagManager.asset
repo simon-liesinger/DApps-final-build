@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - PlayerBullet
+  - EnemyBullet
+  - EnemyHurtBox
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -12,8 +16,8 @@ TagManager:
   - Boxes
   - Water
   - UI
-  - 
-  - 
+  - Ground
+  - Spawn Exclusion
   - 
   - 
   - 

@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner 
     public GameObject[] objectPrefabs;     
     public float minWait = 0.1f;
     public float maxWait = 0.5f;
-    public int maxObjects = 20; // maximum of 10 enemies 
+    public int maxObjects = 50; 
     private List<GameObject> spawnObjects = new List<GameObject>(); // list of enemies
 
     private List<Vector3> validSpawnPositions = new List<Vector3>();
@@ -22,14 +22,8 @@ public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner 
 
     void Start()
     {
-        GatherValidPositions(); // not useful for current feature
+        GatherValidPositions(); 
         StartCoroutine(SpawnObjectsIfNeeded());
-    }
-
-    private int ActiveObjectCount()
-    {
-        spawnObjects.RemoveAll(item => item == null);
-        return spawnObjects.Count;
     }
 
     private IEnumerator SpawnObjectsIfNeeded()
@@ -43,6 +37,12 @@ public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner 
                 SpawnObject();
             }            
         }
+    }
+
+    private int ActiveObjectCount()
+    {
+        spawnObjects.RemoveAll(item => item == null);
+        return spawnObjects.Count;
     }
 
     private bool PositionHasObject(Vector3 positionToCheck)

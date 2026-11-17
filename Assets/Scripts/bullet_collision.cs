@@ -1,5 +1,3 @@
-// this script is attached the bullet prefab
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +9,8 @@ public class bullet_collision : MonoBehaviour
     private Rigidbody2D rb;
     public float speed = 20f;
     public bool isHoming = false;
+    public int damage = 1;
+    private bool hasHit;
 
 
     private void Start()
@@ -28,19 +28,27 @@ public class bullet_collision : MonoBehaviour
 
         if(isHoming)
         {
+            damage = 10;
             Vector2 direction = (mousePos - transform.position).normalized;
             rb.velocity = direction * speed;
             float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
-
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other) // destroys bullet when colliding 
+    void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.CompareTag("Player")) return; // doesn't hit player
-        if (other.CompareTag("Enemy")) return; // doesn't get destroyed when entering enemy detection area
-        if (other.CompareTag("EnemyHurtBox")) return; // did this because the enemy wouldn't get hit otherwise, but causes bullet to go through enemy (work on better solution)
+        if (hasHit) return;
+        if (other.CompareTag("Player")) return;
+        if (other.CompareTag("Enemy") && other.isTrigger) return;
+        if (other.CompareTag("EnemyHurtBox")) return;
+
+        hasHit = true;
+
+        IDamageable target = other.GetComponentInParent<IDamageable>();
+        if (target != null)
+            target.TakeDamage(damage);
+
         Destroy(gameObject);
     }
 
