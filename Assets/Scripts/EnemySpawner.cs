@@ -6,21 +6,23 @@ using UnityEngine.Tilemaps;
 
 public class EnemySpawner : MonoBehaviour // script is attached to EnemySpawner object
 {
-    public enum ObjectType { Enemy1, Enemy2, Enemy3 } // I intend on also adding the power-up for homing missiles and creating enemy scripts.
+    public enum ObjectType { Enemy1, Enemy2, Enemy3 } 
 
     public Tilemap tilemap;
-    public GameObject[] objectPrefabs;  // 0 = Enemy1, 1 = Enemy2, 2 = Enemy3
+    public GameObject[] objectPrefabs;     
+    public float minWait = 0.1f;
+    public float maxWait = 0.5f;
+    public int maxObjects = 20; // maximum of 10 enemies 
+    private List<GameObject> spawnObjects = new List<GameObject>(); // list of enemies
+
+    private List<Vector3> validSpawnPositions = new List<Vector3>();
+    
     public float enemy1Probability = 0.2f;
     public float enemy3Probability = 0.1f;
-    public int maxObjects = 10;
-    public float minWait = 2f;
-    public float maxWait = 5f;
-    private List<Vector3> validSpawnPositions = new List<Vector3>();
-    private List<GameObject> spawnObjects = new List<GameObject>();
 
     void Start()
     {
-        GatherValidPositions();
+        GatherValidPositions(); // not useful for current feature
         StartCoroutine(SpawnObjectsIfNeeded());
     }
 
