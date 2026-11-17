@@ -54,6 +54,6 @@ public class bullet_collision : MonoBehaviour
 
     public void DestroyBullet()
     {
-        DestroyBullet();
+        Destroy(gameObject);
     }
 }
